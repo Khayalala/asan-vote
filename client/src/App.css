@@ -1,39 +1,43 @@
+/* 🌿 Soft Spring-Themed Background */
 body {
   font-family: "Arial", sans-serif;
-  background: linear-gradient(to bottom, #fffae5, #fff0c2);
-  color: #4a3628;
+  background: linear-gradient(to bottom, #d8f3dc, #b7e4c7); /* Light greens */
+  color: #2c3e50; /* Dark blue-gray for contrast */
   margin: 0;
   padding: 0;
   text-align: center;
   overflow-x: hidden;
 }
 
+/* 🌸 Container */
 .container {
   max-width: 500px;
   margin: auto;
   padding: 15px;
 }
 
+/* 🎨 Title Styling */
 h1 {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: bold;
-  color: #ff6600;
+  color: #168aad; /* Vibrant blue */
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
   margin-top: 10px;
   font-family: "Cursive", sans-serif;
 }
 
-/* Novruz banner */
+/* 🌿 Novruz Banner */
 .novruz-banner {
   width: 100%;
-  height: 120px;
+  height: 140px;
   background-size: cover;
   border-radius: 15px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
   margin-bottom: 15px;
+  border: 2px solid #52b788; /* Light green outline */
 }
 
-/* Vote card container */
+/* 🗳 Vote Card Container */
 .center-list {
   display: flex;
   flex-direction: column;
@@ -41,53 +45,45 @@ h1 {
   gap: 10px;
 }
 
-/* Vote card */
+/* 📜 Vote Card */
 .vote-card {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   padding: 14px;
   width: 90%;
   max-width: 350px;
-  height: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: 12px;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s, box-shadow 0.3s;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(8px);
 }
-
+.vote-card p{
+  text-align: center;
+}
 .vote-card:hover {
   transform: scale(1.05);
-  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.vote-card p {
-  flex: 1;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: left;
-  padding-left: 10px;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
+/* 🎭 Vote Button */
 .vote-button {
-  background: linear-gradient(45deg, #ff7b00, #ff4d00);
+  background: linear-gradient(45deg, #52b788, #40916c); /* Green shades */
   color: white;
   padding: 12px 16px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
   transition: background 0.3s, transform 0.2s;
   flex-shrink: 0;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 .vote-button:hover {
-  background: linear-gradient(45deg, #ff5400, #d62c00);
+  background: linear-gradient(45deg, #40916c, #1b4332);
   transform: scale(1.1);
 }
 
@@ -95,24 +91,22 @@ h1 {
   transform: scale(0.95);
 }
 
-.vote-button:disabled {
-  background: gray;
-  cursor: not-allowed;
-}
-
+/* 📊 Results Card */
 .results-card {
-  background: rgba(255, 248, 220, 0.97);
+  background: rgba(255, 255, 255, 0.95);
   padding: 20px;
   border-radius: 15px;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
   animation: fadeIn 1s ease-in-out;
 }
 
+/* 🏆 Results List */
 .results-list {
   list-style-type: none;
   padding: 0;
 }
 
+/* 🎉 Individual Vote Results */
 .result-item {
   padding: 12px;
   font-size: 16px;
@@ -139,29 +133,29 @@ h1 {
   min-width: 60px;
   text-align: right;
   font-weight: bold;
-  color: #ff4500;
+  color: #168aad;
 }
 
-/* Progress Bar Container */
+/* 🔥 Progress Bar */
 .progress-bar {
   flex: 2;
-  height: 14px;
-  background: #e0e0e0;
-  border-radius: 7px;
+  height: 16px;
+  background: #d8f3dc;
+  border-radius: 8px;
   overflow: hidden;
   margin-left: 10px;
   position: relative;
   box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Animated Progress */
 .progress {
   height: 100%;
-  background: linear-gradient(90deg, #ff7b00, #ff4500);
+  background: linear-gradient(90deg, #168aad, #1b4332);
   transition: width 0.8s ease-in-out;
-  border-radius: 7px;
+  border-radius: 8px;
 }
 
+/* 🌀 Smooth Fade-in Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -173,12 +167,23 @@ h1 {
   }
 }
 
+/* 📱 Responsive Design */
 @media (max-width: 480px) {
-  .vote-card {
-    width: 95%;
+  .container {
+    max-width: 95%;
+    padding: 10px;
   }
 
   h1 {
     font-size: 24px;
+  }
+
+  .vote-card {
+    width: 95%;
+  }
+
+  .vote-button {
+    font-size: 14px;
+    padding: 10px;
   }
 }

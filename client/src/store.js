@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import confetti from "canvas-confetti";
 
 const useVoteStore = create((set) => ({
   centers: [
@@ -70,6 +71,13 @@ const useVoteStore = create((set) => ({
       if (response.ok) {
         set({ hasVoted: true });
         await useVoteStore.getState().fetchVotes(); // Refresh results
+
+        // 🎉 Trigger confetti
+        confetti({
+          particleCount: 150,
+          spread: 70,
+          origin: { y: 0.6 },
+        });
       } else {
         alert(data.error); // Show error if already voted
       }
