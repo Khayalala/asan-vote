@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import confetti from "canvas-confetti";
 
+const API_URL = "http://localhost:3000";
+
 const useVoteStore = create((set) => ({
   centers: [
     "1 saylı Bakı ASAN xidmət mərkəzi",
@@ -35,18 +37,19 @@ const useVoteStore = create((set) => ({
     "AKT",
     "Yaşıl ASAN",
   ],
-  votes: Array(31).fill(0), // Will be fetched from the backend
+  votes: Array(31).fill(0),
   hasVoted: false,
 
-  // Fetch the latest vote results from the backend
+  // ✅ Fetch votes from the backend
   fetchVotes: async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/results");
+      const response = await fetch(`${API_URL}/api/results`);
       if (!response.ok) throw new Error("Failed to fetch results");
 
       const data = await response.json();
-      const newVotes = Array(31).fill(0); // Default array
+      const newVotes = Array(31).fill(0);
 
+      // ✅ Map vote counts correctly
       data.forEach((vote) => {
         newVotes[vote._id] = vote.count;
       });
@@ -57,10 +60,26 @@ const useVoteStore = create((set) => ({
     }
   },
 
-  // Vote function to send the vote to the backend
+  // ✅ Check if the user has already voted based on their IP
+  checkIfVoted: async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/check-vote`);
+      const data = await response.json();
+
+      if (data.hasVoted) {
+        set({ hasVoted: true });
+      } else {
+        set({ hasVoted: false });
+      }
+    } catch (error) {
+      console.error("Error checking vote status:", error);
+    }
+  },
+
+  // ✅ Cast a vote
   vote: async (index) => {
     try {
-      const response = await fetch("http://localhost:3000/api/vote", {
+      const response = await fetch(`${API_URL}/api/vote`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ centerId: index }),
@@ -70,16 +89,18 @@ const useVoteStore = create((set) => ({
 
       if (response.ok) {
         set({ hasVoted: true });
-        await useVoteStore.getState().fetchVotes(); // Refresh results
 
-        // 🎉 Trigger confetti
+        // ✅ Fetch updated votes after voting
+        await useVoteStore.getState().fetchVotes();
+
+        // ✅ Confetti effect 🎉
         confetti({
           particleCount: 150,
           spread: 70,
           origin: { y: 0.6 },
         });
       } else {
-        alert(data.error); // Show error if already voted
+        alert(data.error);
       }
     } catch (error) {
       console.error("Error submitting vote:", error);

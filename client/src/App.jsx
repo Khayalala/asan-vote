@@ -1,61 +1,54 @@
 import React, { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import useVoteStore from "./store";
 import "./App.css";
 import samani from "./assets/samani.webp";
+import VotePage from "./Pages/VotePage";
+import ConfirmationPage from "./Pages/ConfirmationPage";
+import Results from "./Pages/Results";
 
-function App() {
-  const { centers, votes, hasVoted, fetchVotes } = useVoteStore();
+function AppContent() {
+  const { hasVoted, checkIfVoted } = useVoteStore();
+  const location = useLocation();
+  const [loading, setLoading] = React.useState(true); //
 
   useEffect(() => {
-    fetchVotes();
+    checkIfVoted().finally(() => setLoading(false));
   }, []);
+
+  if (loading) return null;
 
   return (
     <div className="container">
-      <div
-        className="novruz-banner"
-        style={{ backgroundImage: `url(${samani})` }}
-      ></div>
-      <h1>🌿 ASAN Səsvermə 🌸</h1>
-
-      {hasVoted ? (
-        <div className="card results-card">
-          <h2>Siz artıq səs vermisiniz!</h2>
-          <p>✨ Hazırki nəticələr ✨</p>
-          <ul className="results-list">
-            {centers.map((center, index) => (
-              <li key={index} className="result-item">
-                <strong>{center}</strong>
-                <div className="progress-bar">
-                  <div
-                    className="progress"
-                    style={{ width: `${votes[index] * 5}px` }}
-                  ></div>
-                </div>
-                <span>{votes[index]} səs</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <div>
-          <h2>🎉 Səs verin! 🎉</h2>
-          <div className="center-list">
-            {centers.map((center, index) => (
-              <div key={index} className="vote-card">
-                <p>{center}</p>
-                <button
-                  className="vote-button"
-                  onClick={() => useVoteStore.getState().vote(index)}
-                >
-                  ✅ Səs ver
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* Show banner ONLY if NOT on results page */}
+      {location.pathname !== "/results" && (
+        <div
+          className="novruz-banner"
+          style={{ backgroundImage: `url(${samani})` }}
+        ></div>
       )}
+
+      <Routes>
+        <Route
+          path="/"
+          element={hasVoted ? <ConfirmationPage /> : <VotePage />}
+        />
+        <Route path="/results" element={<Results />} />
+      </Routes>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 }
 
